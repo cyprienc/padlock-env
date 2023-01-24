@@ -1,3 +1,4 @@
+import gymnasium
 import numpy as np
 
 from padlock_env.env import PadlockEnv
@@ -37,9 +38,14 @@ def test_step__final_step(env: PadlockEnv) -> None:
     assert observations.dtype == env.observation_space.dtype
 
     np.testing.assert_equal(observations[:, 0], secret_combination)
-    np.testing.assert_equal(
-        observations[:, 1], np.ones_like(secret_combination)
-    )
+    np.testing.assert_equal(observations[:, 1], np.ones_like(secret_combination))
     assert reward == -1.0
     assert terminated
     assert not truncated
+
+
+def test_make_env__do_one_step() -> None:
+    env = gymnasium.make("Padlock-v0", seed=0)
+    _ = env.reset()
+    action = env.action_space.sample()
+    _ = env.step(action)
