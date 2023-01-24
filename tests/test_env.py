@@ -46,6 +46,8 @@ def test_step__final_step(env: PadlockEnv) -> None:
 
 def test_make_env__do_one_step() -> None:
     env = gymnasium.make("Padlock-v0", seed=0)
+    env.action_space.seed(0)
+
     _ = env.reset()
     action = env.action_space.sample()
     _ = env.step(action)
