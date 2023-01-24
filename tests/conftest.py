@@ -1,6 +1,8 @@
 import sys
 import pytest
 
+from padlock_env.env import PadlockEnv
+
 
 # each test runs on cwd to its temp dir
 @pytest.fixture(autouse=True)
@@ -12,3 +14,8 @@ def go_to_tmpdir(request):
     # Chdir only for the duration of the test.
     with tmpdir.as_cwd():
         yield
+
+
+@pytest.fixture()
+def env() -> PadlockEnv:
+    return PadlockEnv(seed=0)
